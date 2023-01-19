@@ -4,14 +4,12 @@ from .models import Hero, Element, Country
 
 admin.site.register(Hero)
 
+class HeroAdmin(admin.ModelAdmin):
+    fields = ['name', 'element', 'photo']
 
-# admin.site.register(Element, ElementAdmin)
+    # def get_image(self.obj):
+    #     return mark_safe(f'<img src={obj.image.url} width="50" height="60"')
 
-# class ElementAdmin(admin.ModelAdmin):
-#     list_display = ['name_element']
+    #  get_image.short_description='Изображение'
 
-# class HeroAdmin(admin.ModelAdmin):
-#     list_display = ['city']
 
-# admin.site.register(Element,  ElementAdmin)
-# admin.site.register(Hero, HeroAdmin)

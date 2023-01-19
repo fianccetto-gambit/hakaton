@@ -16,11 +16,26 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.urls import path, include
-from heroes.views import HeroAPIView
+from heroes.views import *
+
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.conf.urls.static import static
+from django.conf import settings
+
+from rest_framework import routers
+
+router = routers.DefaultRouter()
+router.register(r'hero', HeroViewSet, basename='hero')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/v1/herolist/', HeroAPIView.as_view()),
     path('api/v1/drf-auth/', include('rest_framework.urls')),
-
+    path('api/v1/', include(router.urls)),
+    
+    # path('api/v1/herolist/', HeroViewSet.as_view({'get':'list'})),
+    # path('api/v1/herolist/<int:pk>/', HeroViewSet.as_view({'put':'update'})),
 ]
+if settings.DEBUG: 
+    urlpatterns += staticfiles_urlpatterns() + static(
+        settings.MEDIA_URL, document_root=settings.MEDIA_ROOT
+    )
